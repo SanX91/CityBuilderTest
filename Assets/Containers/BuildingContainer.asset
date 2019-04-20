@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a07ed6373efca7f4bbd3aeba480fac89, type: 3}
+  m_Name: BuildingContainer
+  m_EditorClassIdentifier: 
+  productionBuildings:
+  - name: Residence
+    prefab: {fileID: 1134808359842559631, guid: 8cb539507e53844abbc6cac81da2fb2a,
+      type: 3}
+    gridSize: {x: 2, y: 2}
+    itemCost:
+      gold: 100
+      wood: 0
+      steel: 0
+    production:
+      resourceType: 0
+      amount: 100
+      time: 10
+  - name: Wood Production
+    prefab: {fileID: 6837885162318440743, guid: add0de247d5e34d7a9fd680d17f7d65a,
+      type: 3}
+    gridSize: {x: 3, y: 2}
+    itemCost:
+      gold: 150
+      wood: 0
+      steel: 0
+    production:
+      resourceType: 1
+      amount: 50
+      time: 10
+  - name: Steel Production
+    prefab: {fileID: 5544763611581036915, guid: 16515dd91ebb84b3a8f20dc29c23264f,
+      type: 3}
+    gridSize: {x: 3, y: 3}
+    itemCost:
+      gold: 150
+      wood: 100
+      steel: 0
+    production:
+      resourceType: 2
+      amount: 50
+      time: 10
+  decorationBuildings:
+  - name: Tree
+    prefab: {fileID: 7051956560768922039, guid: ea2d4810dcf0148cbbdf9f05d44ddfe4,
+      type: 3}
+    gridSize: {x: 2, y: 2}
+    itemCost:
+      gold: 50
+      wood: 200
+      steel: 0
+  - name: Bench
+    prefab: {fileID: 5393388301532982471, guid: affe66bd566d942f78badd68c1a973d1,
+      type: 3}
+    gridSize: {x: 1, y: 1}
+    itemCost:
+      gold: 150
+      wood: 0
+      steel: 50
