@@ -5,10 +5,26 @@ using UnityEngine;
 namespace CityBuilderTest
 {
     [CreateAssetMenu(fileName = "BuildingContainer", menuName = "CityBuilderTest/BuildingContainer")]
-    public class BuildingContainer : ScriptableObject
+    public class BuildingContainer : ScriptableObject, IBuildingContainer
     {
         public List<ProductionBuildingConfig> productionBuildings;
         public List<BuildingConfig> decorationBuildings;
+
+        public IEnumerable<BuildingConfig> DecorationBuildings()
+        {
+            foreach(var building in decorationBuildings)
+            {
+                yield return building;
+            }
+        }
+
+        public IEnumerable<ProductionBuildingConfig> ProductionBuildings()
+        {
+            foreach (var building in productionBuildings)
+            {
+                yield return building;
+            }
+        }
     }
 
     [Serializable]
@@ -17,7 +33,7 @@ namespace CityBuilderTest
         public string name;
         public GameObject prefab;
         public Vector2 gridSize;
-        public ResourcePile itemCost;
+        public Currency itemCost;
     }
 
     [Serializable]
@@ -27,16 +43,16 @@ namespace CityBuilderTest
     }
 
     [Serializable]
-    public class ResourcePile
+    public class Currency
     {
         public int gold, wood, steel;
 
-        public bool IsGreaterThanOrEqual(ResourcePile resourceData)
+        public bool IsGreaterThanOrEqual(Currency target)
         {
-            return resourceData != null
-                && resourceData.gold >= gold
-                && resourceData.wood >= wood
-                && resourceData.steel >= steel;
+            return target != null
+                && gold >= target.gold
+                && wood >= target.wood
+                && steel >= target.steel;
         }
     }
 
