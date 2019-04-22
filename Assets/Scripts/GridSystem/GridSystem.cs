@@ -74,7 +74,7 @@ namespace CityBuilderTest
             return true;
         }
 
-        public void PlaceObject(IPlaceable placeable)
+        public void TogglePlaceObject(IPlaceable placeable, bool isPlaced)
         {
             Vector2Int gridId = placeable.StartGridId;
 
@@ -82,7 +82,7 @@ namespace CityBuilderTest
             {
                 for (int j = 0; j < placeable.GridCost().y; j++)
                 {
-                    grids[gridId.x + i, gridId.y + j].isOccupied = true;
+                    grids[gridId.x + i, gridId.y + j].isOccupied = isPlaced;
                 }
             }
         }

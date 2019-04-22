@@ -87,7 +87,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6837885162318440736}
   - component: {fileID: 6975221463328534909}
-  m_Layer: 0
+  - component: {fileID: 1824430671211622668}
+  m_Layer: 10
   m_Name: WoodProduction(3x2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +124,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89194d83e4e48e458756d5c8034cc28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingUI: {fileID: 7923156147489527861}
+  collider: {fileID: 1824430671211622668}
+  buildingUI: {fileID: 6369564662867883106}
+--- !u!65 &1824430671211622668
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6837885162318440743}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 27.753786, y: 13.436403, z: 17.964354}
+  m_Center: {x: 15.15351, y: 7.158764, z: -9.94527}
 --- !u!1 &6837885162669836372
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,15 +355,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 7046054817497177770}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7923156147489527861 stripped
+--- !u!114 &6369564662867883106 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 881624775616202399, guid: ce671e13a42944b43a713c18bd3a67db,
+  m_CorrespondingSourceObject: {fileID: 4156154872666237640, guid: ce671e13a42944b43a713c18bd3a67db,
     type: 3}
   m_PrefabInstance: {fileID: 7046054817497177770}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d30ecf0909d933439699aa880a6bfca, type: 3}
+  m_Script: {fileID: 11500000, guid: ffad5c75f1b663c4cbbbca641d222e41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

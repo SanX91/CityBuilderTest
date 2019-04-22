@@ -16,16 +16,16 @@ namespace CityBuilderTest
             buildingContainer = param.GameConfig().BuildingContainer();
 
             buildingButtons = new List<BuildingButton>();
-            buildingButtons.AddRange(CreateButtons(buildingContainer.ProductionBuildings(), param.BuildMode().OnClick));
-            buildingButtons.AddRange(CreateButtons(buildingContainer.DecorationBuildings(), param.BuildMode().OnClick));
+            buildingButtons.AddRange(CreateButtons(buildingContainer.ProductionBuildings(), param.GetResourceManager(), param.ModeSelection().BuildMode().CreateBuilding));
+            buildingButtons.AddRange(CreateButtons(buildingContainer.DecorationBuildings(), param.GetResourceManager(), param.ModeSelection().BuildMode().CreateBuilding));
         }
 
-        private IEnumerable<BuildingButton> CreateButtons(IEnumerable<BuildingConfig> buildings, Action<BuildingConfig> onClick)
+        private IEnumerable<BuildingButton> CreateButtons(IEnumerable<BuildingConfig> buildings, ResourceManager resourceManager, Action<BuildingConfig> onClick)
         {
             foreach (BuildingConfig building in buildings)
             {
                 BuildingButton button = Instantiate(buildingButtonPrefab, content);
-                button.Initialize(building, null, ()=> {
+                button.Initialize(building, resourceManager, ()=> {
                     onClick(building);
                 });
                 yield return button;

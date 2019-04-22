@@ -32,6 +32,7 @@ namespace CityBuilderTest
     public interface IGameConfig
     {
         IBuildingContainer BuildingContainer();
+        Currency StartUpFunds();
     }
 
     public interface IBuildingContainer
@@ -60,12 +61,22 @@ namespace CityBuilderTest
     public interface IGameManager
     {
         IGameConfig GameConfig();
-        IMode BuildMode();
+        IModeSelection ModeSelection();
+        ResourceManager GetResourceManager();
     }
 
-    public interface IMode
+    public interface IModeSelection
     {
-        void OnClick(BuildingConfig buildingConfig);
+        BuildMode BuildMode();
+        RegularMode RegularMode();
+        void SwitchMode(Mode mode);
+        bool IsBusy { get; set; }
+    }
+
+    public interface ISelectable
+    {
+        void OnSelect();
+        void OnDeselect();
     }
 }
 

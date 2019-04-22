@@ -13,3 +13,7 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: 
   buildingContainer: {fileID: 11400000, guid: b8d0de5de791e774daae82bb95213662, type: 2}
+  startUpFunds:
+    gold: 1000
+    wood: 500
+    steel: 500

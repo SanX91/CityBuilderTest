@@ -8,10 +8,16 @@ namespace CityBuilderTest
     public class GameConfig : ScriptableObject, IGameConfig
     {
         public BuildingContainer buildingContainer;
+        public Currency startUpFunds;
 
         public IBuildingContainer BuildingContainer()
         {
             return buildingContainer;
+        }
+
+        public Currency StartUpFunds()
+        {
+            return startUpFunds;
         }
     }
 }

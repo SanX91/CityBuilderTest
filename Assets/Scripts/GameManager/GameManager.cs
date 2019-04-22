@@ -7,7 +7,7 @@ namespace CityBuilderTest
     public class GameManager : MonoBehaviour, IGameManager
     {
         public GridSystem gridSystem;
-        public BuildMode buildMode;
+        public ModeSelection modeSelection;
         public UIManager uiManager;
         public ResourceManager resourceManager;
         public GameConfig gameConfig;
@@ -17,22 +17,27 @@ namespace CityBuilderTest
             return gameConfig;
         }
 
-        public IMode BuildMode()
+        public IModeSelection ModeSelection()
         {
-            return buildMode;
+            return modeSelection;
+        }
+
+        public ResourceManager GetResourceManager()
+        {
+            return resourceManager;
         }
 
         private void Start()
         {
             gridSystem.Initialize();
-            //resourceManager.Initialize();
-            buildMode.Initialize(gridSystem);
+            modeSelection.Initialize(gridSystem,resourceManager);
             uiManager.Initialize(this);
+            resourceManager.Initialize(gameConfig.startUpFunds);
         }
 
         void Update()
         {
-            buildMode.OnUpdate();
+            modeSelection.OnUpdate();
         }
     }
 }

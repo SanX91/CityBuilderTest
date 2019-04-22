@@ -5,10 +5,14 @@ using UnityEngine.EventSystems;
 
 namespace CityBuilderTest
 {
-    public abstract class Mode : MonoBehaviour
+    public abstract class Mode : MonoBehaviour, IUpdateable
     {
+        public LayerMask buildingMask;
         public EventSystem eventSystem;
         protected IController controller;
+
+        public abstract void OnUpdate();
+        public abstract void OnExit();
     }
 }
 

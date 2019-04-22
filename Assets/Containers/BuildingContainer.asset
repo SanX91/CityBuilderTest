@@ -21,9 +21,12 @@ MonoBehaviour:
       gold: 100
       wood: 0
       steel: 0
+    constructionTime: 10
     production:
-      resourceType: 0
-      amount: 100
+      produce:
+        gold: 100
+        wood: 0
+        steel: 0
       time: 10
   - name: Wood Production
     prefab: {fileID: 6837885162318440743, guid: add0de247d5e34d7a9fd680d17f7d65a,
@@ -33,9 +36,12 @@ MonoBehaviour:
       gold: 150
       wood: 0
       steel: 0
+    constructionTime: 10
     production:
-      resourceType: 1
-      amount: 50
+      produce:
+        gold: 0
+        wood: 50
+        steel: 0
       time: 10
   - name: Steel Production
     prefab: {fileID: 5544763611581036915, guid: 16515dd91ebb84b3a8f20dc29c23264f,
@@ -45,9 +51,12 @@ MonoBehaviour:
       gold: 150
       wood: 100
       steel: 0
+    constructionTime: 10
     production:
-      resourceType: 2
-      amount: 50
+      produce:
+        gold: 0
+        wood: 0
+        steel: 50
       time: 10
   decorationBuildings:
   - name: Tree
@@ -58,6 +67,7 @@ MonoBehaviour:
       gold: 50
       wood: 200
       steel: 0
+    constructionTime: 10
   - name: Bench
     prefab: {fileID: 5393388301532982471, guid: affe66bd566d942f78badd68c1a973d1,
       type: 3}
@@ -66,3 +76,4 @@ MonoBehaviour:
       gold: 150
       wood: 0
       steel: 50
+    constructionTime: 10

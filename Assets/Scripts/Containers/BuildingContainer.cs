@@ -61,28 +61,26 @@ namespace CityBuilderTest
 
         }
 
-        public bool IsGreaterThanOrEqual(Currency target)
+        public void Add(Currency currency)
         {
-            return target != null
-                && gold >= target.gold
-                && wood >= target.wood
-                && steel >= target.steel;
+            gold += currency.gold;
+            wood += currency.wood;
+            steel += currency.steel;
+        }
+
+        public void Remove(Currency currency)
+        {
+            gold -= currency.gold;
+            wood -= currency.wood;
+            steel -= currency.steel;
         }
     }
 
     [Serializable]
     public class ResourceProduction
     {
-        public ResourceTypes resourceType;
-        public int amount;
+        public Currency produce;
         [Tooltip("Time in seconds")]
         public float time;
     }
-
-    public enum ResourceTypes
-    {
-        Gold = 0,
-        Wood = 1,
-        Steel = 2
-    } 
 }
