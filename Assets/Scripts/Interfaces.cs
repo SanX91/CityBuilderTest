@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace CityBuilderTest
 {
@@ -28,10 +29,43 @@ namespace CityBuilderTest
         void Initialize(T param1, U param2, V param3);
     }
 
+    public interface IGameConfig
+    {
+        IBuildingContainer BuildingContainer();
+    }
+
     public interface IBuildingContainer
     {
         IEnumerable<ProductionBuildingConfig> ProductionBuildings();
         IEnumerable<BuildingConfig> DecorationBuildings();
+    }
+
+    public interface IController
+    {
+        Vector2 Position();
+        bool HasClicked();
+    }
+
+    public interface IPlaceable
+    {
+        Vector2Int StartGridId { get; set; }
+        Vector2Int GridCost();
+    }
+
+    public interface IUpdateable
+    {
+        void OnUpdate();
+    }
+
+    public interface IGameManager
+    {
+        IGameConfig GameConfig();
+        IMode BuildMode();
+    }
+
+    public interface IMode
+    {
+        void OnClick(BuildingConfig buildingConfig);
     }
 }
 

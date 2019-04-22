@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace CityBuilderTest
 {
-    public class UIManager : MonoBehaviour, ISerializationCallbackReceiver, IInitializer<IBuildingContainer>
+    public class UIManager : MonoBehaviour, ISerializationCallbackReceiver, IInitializer<IGameManager>
     {
         public List<UIPanel> uiPanels;
 
@@ -25,7 +25,7 @@ namespace CityBuilderTest
             }
         }
 
-        public void Initialize(IBuildingContainer param)
+        public void Initialize(IGameManager param)
         {
             GetPanel<GameHUD>().Initialize(param);
             GetPanel<GameHUD>().Open();

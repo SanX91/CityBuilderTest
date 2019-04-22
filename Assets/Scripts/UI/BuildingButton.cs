@@ -22,7 +22,7 @@ namespace CityBuilderTest
             this.onClick = onClick;
 
             costText.text = $"G: {itemCost.gold}, W: {itemCost.wood}, S: {itemCost.steel}";
-            ToggleInteractable();
+            //ToggleInteractable();
         }
 
         public void ToggleInteractable()

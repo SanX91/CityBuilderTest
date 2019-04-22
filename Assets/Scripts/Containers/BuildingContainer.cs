@@ -32,8 +32,10 @@ namespace CityBuilderTest
     {
         public string name;
         public GameObject prefab;
-        public Vector2 gridSize;
+        public Vector2Int gridCost;
         public Currency itemCost;
+        [Tooltip("Time in seconds")]
+        public float constructionTime = 10;
     }
 
     [Serializable]
@@ -46,6 +48,18 @@ namespace CityBuilderTest
     public class Currency
     {
         public int gold, wood, steel;
+
+        public Currency(Currency target)
+        {
+            gold = target.gold;
+            wood = target.wood;
+            steel = target.steel;
+        }
+
+        public Currency()
+        {
+
+        }
 
         public bool IsGreaterThanOrEqual(Currency target)
         {

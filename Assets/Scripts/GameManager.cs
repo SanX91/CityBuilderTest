@@ -4,14 +4,35 @@ using UnityEngine;
 
 namespace CityBuilderTest
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : MonoBehaviour, IGameManager
     {
+        public GridSystem gridSystem;
+        public BuildMode buildMode;
         public UIManager uiManager;
-        public BuildingContainer buildingContainer;
+        public ResourceManager resourceManager;
+        public GameConfig gameConfig;
+
+        public IGameConfig GameConfig()
+        {
+            return gameConfig;
+        }
+
+        public IMode BuildMode()
+        {
+            return buildMode;
+        }
 
         private void Start()
         {
-            uiManager.Initialize(buildingContainer);
+            gridSystem.Initialize();
+            //resourceManager.Initialize();
+            buildMode.Initialize(gridSystem);
+            uiManager.Initialize(this);
+        }
+
+        void Update()
+        {
+            buildMode.OnUpdate();
         }
     }
 }

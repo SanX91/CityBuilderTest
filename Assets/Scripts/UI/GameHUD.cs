@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CityBuilderTest
 {
-    public class GameHUD : UIPanel, IInitializer<IBuildingContainer>
+    public class GameHUD : UIPanel, IInitializer<IGameManager>
     {
         private void OnEnable()
         {
@@ -35,7 +35,7 @@ namespace CityBuilderTest
             GetMiniPanel<BuildingsPanel>().Close();
         }
 
-        public void Initialize(IBuildingContainer param)
+        public void Initialize(IGameManager param)
         {
             GetMiniPanel<BuildingsPanel>().Initialize(param);
         }
