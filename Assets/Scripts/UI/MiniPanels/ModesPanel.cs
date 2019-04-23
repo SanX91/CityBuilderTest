@@ -1,8 +1,10 @@
 ﻿using System;
-using UnityEngine;
 
 namespace CityBuilderTest
 {
+    /// <summary>
+    /// The modes panel class.
+    /// </summary>
     public class ModesPanel : MiniPanel
     {
         public event EventHandler OnBuild;
@@ -10,7 +12,7 @@ namespace CityBuilderTest
 
         public void OnBuildMode()
         {
-            OnBuild?.Invoke(this,EventArgs.Empty);
+            OnBuild?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnRegularMode()

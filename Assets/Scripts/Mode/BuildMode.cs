@@ -1,86 +1,98 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CityBuilderTest
 {
-    public class BuildMode : Mode, IInitializer<GridSystem, ResourceManager, IModeSelection>
+    /// <summary>
+    /// The Build Mode class.
+    /// Has methods to be used when the build mode is active.
+    /// Has methods to create, move, select and place buildings.
+    /// </summary>
+    public class BuildMode : Mode, IInitializer<IGameManager, IController>
     {
         public LayerMask gridMask;
-        GridSystem gridSystem;
-        ResourceManager resourceManager;
-        IModeSelection modeSelection;
-        List<Building> buildings;
-        Building building;
+        private IGameManager gameManager;
+        private Building building;
 
+        /// <summary>
+        /// Creates a new building with the buildingConfig data.
+        /// </summary>
+        /// <param name="buildingConfig"></param>
         public void CreateBuilding(BuildingConfig buildingConfig)
         {
-            if(building!=null)
+            if (building != null)
             {
                 return;
             }
 
             building = Instantiate(buildingConfig.prefab).GetComponent<Building>();
-            building.Initialize(buildingConfig,resourceManager,modeSelection);
+            building.Initialize(buildingConfig, gameManager);
 
-            modeSelection.IsBusy = true;
+            gameManager.ModeSelection().IsBusy = true;
         }
 
-        public void Initialize(GridSystem param1, ResourceManager param2, IModeSelection param3)
+        public void Initialize(IGameManager gameManager, IController controller)
         {
-            gridSystem = param1;
-            resourceManager = param2;
-            modeSelection = param3;
-
-            buildings = new List<Building>();
+            this.gameManager = gameManager;
+            this.controller = controller;
         }
 
+        /// <summary>
+        /// Moves a building.
+        /// Unregisters the building from the grid system.
+        /// </summary>
+        /// <param name="building"></param>
         public void MoveBuilding(Building building)
         {
-            gridSystem.TogglePlaceObject(building, false);
+            gameManager.GridSystem().TogglePlaceObject(building, false);
             this.building = building;
 
-            modeSelection.IsBusy = true;
+            gameManager.ModeSelection().IsBusy = true;
         }
 
         public override void OnExit()
         {
-            
+
         }
 
-        void SelectBuilding()
+        /// <summary>
+        /// Selects the building if the user clicks on it.
+        /// </summary>
+        private void SelectBuilding()
         {
+            if (!controller.HasFired())
+            {
+                return;
+            }
+
             if (eventSystem.IsPointerOverGameObject())
             {
                 return;
             }
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
 
-            if (!Physics.Raycast(ray, out hit, Mathf.Infinity, buildingMask.value))
+            if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, buildingMask.value))
             {
                 return;
             }
 
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                hit.collider.gameObject.GetComponent<Building>().OnSelect(this);
-            }
+            hit.collider.gameObject.GetComponent<Building>().OnSelect(this);
         }
 
-        void PlaceBuilding()
+        /// <summary>
+        /// Checks if the user can place the building on the grid.
+        /// If it's possible to place the building, and the user clicks, the building is placed on the grid.
+        /// </summary>
+        private void PlaceBuilding()
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(controller.Position());
 
-            if (!Physics.Raycast(ray, out hit, Mathf.Infinity, gridMask.value))
+            if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, gridMask.value))
             {
                 return;
             }
 
-            Vector2 position;
-            bool canPlaceBuilding = gridSystem.CanPlaceObject(building, new Vector2(hit.point.x, hit.point.z), out position);
+            bool canPlaceBuilding = gameManager.GridSystem().CanPlaceObject(building, new Vector2(hit.point.x, hit.point.z), out Vector2 position);
             building.transform.position = new Vector3(position.x, 0, position.y);
 
             if (eventSystem.IsPointerOverGameObject())
@@ -93,12 +105,11 @@ namespace CityBuilderTest
                 return;
             }
 
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (controller.HasFired())
             {
                 building.Construct();
-                gridSystem.TogglePlaceObject(building, true);
-                buildings.Add(building);
-                modeSelection.IsBusy = false;
+                gameManager.GridSystem().TogglePlaceObject(building, true);
+                gameManager.ModeSelection().IsBusy = false;
                 building = null;
             }
         }

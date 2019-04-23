@@ -1,21 +1,24 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace CityBuilderTest
 {
+    /// <summary>
+    /// The production building UI class.
+    /// Derives from the BuildingUI class.
+    /// Apart from all the elements from the BuildingUI class, adds a production button.
+    /// </summary>
     public class ProductionBuildingUI : BuildingUI, IInitializer<Action>
     {
         [SerializeField]
-        Button productionButton;
+        private Button productionButton;
 
-        public void Initialize(Action param)
+        public void Initialize(Action onClick)
         {
-            productionButton.onClick.AddListener(()=>
+            productionButton.onClick.AddListener(() =>
             {
-                param?.Invoke();
+                onClick?.Invoke();
             });
         }
 

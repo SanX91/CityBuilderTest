@@ -2,6 +2,9 @@
 
 namespace CityBuilderTest
 {
+    /// <summary>
+    /// The base mini panel class.
+    /// </summary>
     public abstract class MiniPanel : MonoBehaviour, IPanel
     {
         protected bool isInitialized;

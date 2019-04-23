@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace CityBuilderTest
 {
+    /// <summary>
+    /// The building container class.
+    /// Stores all the building prefabs and their properties.
+    /// </summary>
     [CreateAssetMenu(fileName = "BuildingContainer", menuName = "CityBuilderTest/BuildingContainer")]
     public class BuildingContainer : ScriptableObject, IBuildingContainer
     {
@@ -12,7 +16,7 @@ namespace CityBuilderTest
 
         public IEnumerable<BuildingConfig> DecorationBuildings()
         {
-            foreach(var building in decorationBuildings)
+            foreach (BuildingConfig building in decorationBuildings)
             {
                 yield return building;
             }
@@ -20,7 +24,7 @@ namespace CityBuilderTest
 
         public IEnumerable<ProductionBuildingConfig> ProductionBuildings()
         {
-            foreach (var building in productionBuildings)
+            foreach (ProductionBuildingConfig building in productionBuildings)
             {
                 yield return building;
             }
@@ -38,12 +42,20 @@ namespace CityBuilderTest
         public float constructionTime = 10;
     }
 
+    /// <summary>
+    /// ProductionBuildingConfig derives from BuildingConfig and adds a resource production field to it.
+    /// </summary>
     [Serializable]
     public class ProductionBuildingConfig : BuildingConfig
     {
         public ResourceProduction production;
     }
 
+    /// <summary>
+    /// The Currency class.
+    /// Can be used as a cost of an object.
+    /// Also can be used to store resource data.
+    /// </summary>
     [Serializable]
     public class Currency
     {

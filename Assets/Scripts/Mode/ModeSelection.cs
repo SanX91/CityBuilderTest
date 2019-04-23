@@ -1,17 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CityBuilderTest
 {
-    public class ModeSelection : MonoBehaviour, IModeSelection, IInitializer<GridSystem, ResourceManager>, IUpdateable
+    /// <summary>
+    /// The mode selection class.
+    /// Responsible for choosing between the different modes.
+    /// Also initializes and updates the different modes.
+    /// </summary>
+    public class ModeSelection : MonoBehaviour, IModeSelection, IInitializer<IGameManager, IController>, IUpdateable
     {
         [SerializeField]
-        BuildMode buildMode;
+        private BuildMode buildMode;
         [SerializeField]
-        RegularMode regularMode;
+        private RegularMode regularMode;
+        private Mode currentMode;
 
-        Mode currentMode;
+        //If IsBusy=true, cannot change modes.
         public bool IsBusy { get; set; }
 
         public BuildMode BuildMode()
@@ -26,7 +30,7 @@ namespace CityBuilderTest
 
         public void SwitchMode(Mode mode)
         {
-            if(currentMode != mode)
+            if (currentMode != mode)
             {
                 currentMode.OnExit();
             }
@@ -34,15 +38,16 @@ namespace CityBuilderTest
             currentMode = mode;
         }
 
-        public void Initialize(GridSystem param1, ResourceManager param2)
+        public void Initialize(IGameManager gameManager, IController controller)
         {
-            buildMode.Initialize(param1, param2, this);
+            regularMode.Initialize(controller);
+            buildMode.Initialize(gameManager, controller);
             currentMode = regularMode;
         }
 
         public void OnUpdate()
         {
-            if(currentMode == null)
+            if (currentMode == null)
             {
                 return;
             }

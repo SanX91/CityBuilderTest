@@ -1,14 +1,21 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CityBuilderTest
 {
+    /// <summary>
+    /// Class for production buildings.
+    /// Apart from the added functionality of Production, 
+    /// the remaining functionalities are the same as any other Building.
+    /// </summary>
     public class ProductionBuilding : Building
     {
-        bool canProduce, isProductionPaused;
-        ProductionBuildingUI productionBuildingUI;
+        private bool canProduce, isProductionPaused;
+        private ProductionBuildingUI productionBuildingUI;
 
+        /// <summary>
+        /// Production is paused when the building is in the process of being moved.
+        /// </summary>
         public override void Construct()
         {
             base.Construct();
@@ -22,7 +29,10 @@ namespace CityBuilderTest
             productionBuildingUI.Initialize(StartProduction);
         }
 
-        void StartProduction()
+        /// <summary>
+        /// Method to be called to being production.
+        /// </summary>
+        private void StartProduction()
         {
             StartCoroutine(Production());
             productionBuildingUI.ToggleProductionButton(false);
@@ -30,14 +40,20 @@ namespace CityBuilderTest
             canProduce = true;
         }
 
-        IEnumerator Production()
+        /// <summary>
+        /// The production once started will go on forever.
+        /// However, production will be paused when the building is being moved.
+        /// Generates resources after each production cycle.
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator Production()
         {
             float productionTime = 0;
             ProductionBuildingConfig productionBuildingConfig = (ProductionBuildingConfig)config;
 
             while (isReady)
             {
-                if(isProductionPaused)
+                if (isProductionPaused)
                 {
                     yield return null;
                     continue;
@@ -46,7 +62,7 @@ namespace CityBuilderTest
                 productionTime += Time.deltaTime;
                 if (productionTime >= productionBuildingConfig.production.time)
                 {
-                    resourceManager.AdjustResources(productionBuildingConfig.production.produce);
+                    gameManager.ResourceManager().AdjustResources(productionBuildingConfig.production.produce);
                     productionTime = 0;
                 }
 
@@ -55,21 +71,26 @@ namespace CityBuilderTest
             }
         }
 
+        /// <summary>
+        /// Production buildings will also display the production progress bar upon selection(Post construction).
+        /// If production hasn't started it will display a start production button(Post construction).
+        /// </summary>
+        /// <param name="mode"></param>
         public override void OnSelect(Mode mode)
         {
             base.OnSelect(mode);
-            if(!isReady)
+            if (!isReady)
             {
                 return;
             }
 
-            if (mode == modeSelection.BuildMode())
+            if (mode == gameManager.ModeSelection().BuildMode())
             {
                 isProductionPaused = true;
                 return;
             }
 
-            if(canProduce)
+            if (canProduce)
             {
                 buildingUI.ToggleProgressBar(true);
                 return;

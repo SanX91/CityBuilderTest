@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CityBuilderTest
@@ -44,7 +45,7 @@ namespace CityBuilderTest
     public interface IController
     {
         Vector2 Position();
-        bool HasClicked();
+        bool HasFired();
     }
 
     public interface IPlaceable
@@ -62,7 +63,8 @@ namespace CityBuilderTest
     {
         IGameConfig GameConfig();
         IModeSelection ModeSelection();
-        ResourceManager GetResourceManager();
+        IResourceManager ResourceManager();
+        IGridSystem GridSystem();
     }
 
     public interface IModeSelection
@@ -75,8 +77,21 @@ namespace CityBuilderTest
 
     public interface ISelectable
     {
-        void OnSelect();
+        void OnSelect(Mode mode);
         void OnDeselect();
+    }
+
+    public interface IResourceManager
+    {
+        event EventHandler<ResourceUpdateEventArgs> OnResourceUpdate;
+        void AdjustResources(Currency currency, bool isExpense = false);
+        bool HaveSufficientResources(Currency target);
+    }
+
+    public interface IGridSystem
+    {
+        bool CanPlaceObject(IPlaceable placeable, Vector2 inputPosition, out Vector2 gridPosition);
+        void TogglePlaceObject(IPlaceable placeable, bool isPlaced);
     }
 }
 

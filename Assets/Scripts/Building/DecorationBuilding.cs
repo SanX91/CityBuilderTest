@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace CityBuilderTest
+﻿namespace CityBuilderTest
 {
+    /// <summary>
+    /// Class for Decoration buildings.
+    /// </summary>
     public class DecorationBuilding : Building
     {
 

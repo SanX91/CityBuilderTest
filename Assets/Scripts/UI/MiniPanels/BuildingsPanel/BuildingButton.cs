@@ -4,23 +4,27 @@ using UnityEngine.UI;
 
 namespace CityBuilderTest
 {
-    public class BuildingButton : MonoBehaviour, IInitializer<BuildingConfig, ResourceManager, Action>
+    /// <summary>
+    /// The building button class.
+    /// Displays the right information and cost of a building.
+    /// Should create a building when clicked.
+    /// </summary>
+    public class BuildingButton : MonoBehaviour, IInitializer<BuildingConfig, IResourceManager, Action>
     {
         [SerializeField]
         private Button button;
         [SerializeField]
         private Text buttonNameText, costText;
         private Action onClick;
+        private Currency itemCost;
+        private IResourceManager resourceManager;
 
-        Currency itemCost;
-        ResourceManager resourceManager;
-
-        void OnEnable()
+        private void OnEnable()
         {
             ToggleInteractable();
         }
 
-        public void Initialize(BuildingConfig buildingConfig, ResourceManager resourceManager, Action onClick)
+        public void Initialize(BuildingConfig buildingConfig, IResourceManager resourceManager, Action onClick)
         {
             buttonNameText.text = buildingConfig.name;
             itemCost = buildingConfig.itemCost;
@@ -38,9 +42,9 @@ namespace CityBuilderTest
             ToggleInteractable();
         }
 
-        void ToggleInteractable()
+        private void ToggleInteractable()
         {
-            if(resourceManager == null)
+            if (resourceManager == null)
             {
                 return;
             }

@@ -3,9 +3,14 @@ using UnityEngine;
 
 namespace CityBuilderTest
 {
+    /// <summary>
+    /// The Game HUD class.
+    /// Responsible for displaying the resources mini panel and the modes mini panel.
+    /// Also displays the buildings mini panel when Build Mode is active.
+    /// </summary>
     public class GameHUD : UIPanel, IInitializer<IGameManager>
     {
-        IModeSelection modeSelection;
+        private IModeSelection modeSelection;
 
         private void OnEnable()
         {
@@ -27,7 +32,7 @@ namespace CityBuilderTest
             GetMiniPanel<BuildingsPanel>().Close();
         }
 
-        void OnBuild(object sender, EventArgs e)
+        private void OnBuild(object sender, EventArgs e)
         {
             if (modeSelection.IsBusy)
             {
@@ -39,9 +44,9 @@ namespace CityBuilderTest
             modeSelection.SwitchMode(modeSelection.BuildMode());
         }
 
-        void OnRegular(object sender, EventArgs e)
+        private void OnRegular(object sender, EventArgs e)
         {
-            if(modeSelection.IsBusy)
+            if (modeSelection.IsBusy)
             {
                 Debug.Log("Cannot change mode now!");
                 return;
@@ -51,11 +56,11 @@ namespace CityBuilderTest
             modeSelection.SwitchMode(modeSelection.RegularMode());
         }
 
-        public void Initialize(IGameManager param)
+        public void Initialize(IGameManager gameManager)
         {
-            modeSelection = param.ModeSelection();
-            GetMiniPanel<ResourcesPanel>().Initialize(param.GetResourceManager());
-            GetMiniPanel<BuildingsPanel>().Initialize(param);
+            modeSelection = gameManager.ModeSelection();
+            GetMiniPanel<ResourcesPanel>().Initialize(gameManager.ResourceManager());
+            GetMiniPanel<BuildingsPanel>().Initialize(gameManager);
         }
     }
 }

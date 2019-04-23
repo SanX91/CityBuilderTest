@@ -1,20 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace CityBuilderTest
 {
+    /// <summary>
+    /// The building UI class.
+    /// Has all the UI elements which can show up on a building.
+    /// </summary>
     public class BuildingUI : MonoBehaviour, IInitializer<string>
     {
         [SerializeField]
-        Text nameText;
+        private Text nameText;
         [SerializeField]
-        ProgressBar progressBar;
+        private ProgressBar progressBar;
 
-        public void Initialize(string param)
+        public void Initialize(string name)
         {
-            nameText.text = param;
+            nameText.text = name;
             ToggleUI(false);
         }
 

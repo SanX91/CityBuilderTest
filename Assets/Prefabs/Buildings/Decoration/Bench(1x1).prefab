@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f59107cbc29560e4cb5343caf9555030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider: {fileID: 1556479378868761612}
+  col: {fileID: 1556479378868761612}
   buildingUI: {fileID: 461716944}
 --- !u!65 &1556479378868761612
 BoxCollider:

@@ -1,20 +1,29 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CityBuilderTest
 {
-    public class ResourceManager : MonoBehaviour, IInitializer<Currency>
+    /// <summary>
+    /// The resource manager class.
+    /// Maintains the available resources(Currency).
+    /// Has a method to adjust the resources.
+    /// Has a method to check if there are sufficient resources for a purchase.
+    /// </summary>
+    public class ResourceManager : MonoBehaviour, IInitializer<Currency>, IResourceManager
     {
         public event EventHandler<ResourceUpdateEventArgs> OnResourceUpdate;
-        Currency resourceData;
+        private Currency resourceData;
 
-        void OnResourceUpdated()
+        private void OnResourceUpdated()
         {
             OnResourceUpdate?.Invoke(this, new ResourceUpdateEventArgs(resourceData));
         }
 
+        /// <summary>
+        /// Determines if the available resources are sufficient for a potential purchase.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public bool HaveSufficientResources(Currency target)
         {
             return target != null
@@ -24,9 +33,15 @@ namespace CityBuilderTest
                 && resourceData.steel >= target.steel;
         }
 
+        /// <summary>
+        /// Can add further resources.
+        /// Can remove resources.
+        /// </summary>
+        /// <param name="currency"></param>
+        /// <param name="isExpense"></param>
         public void AdjustResources(Currency currency, bool isExpense = false)
         {
-            if(!isExpense)
+            if (!isExpense)
             {
                 resourceData.Add(currency);
             }
@@ -38,13 +53,16 @@ namespace CityBuilderTest
             OnResourceUpdated();
         }
 
-        public void Initialize(Currency param)
+        public void Initialize(Currency funds)
         {
-            resourceData = new Currency(param);
+            resourceData = new Currency(funds);
             OnResourceUpdated();
         }
     }
 
+    /// <summary>
+    /// Event arguments for a resource update event.
+    /// </summary>
     public class ResourceUpdateEventArgs : EventArgs
     {
         public Currency ResourceData { get; private set; }

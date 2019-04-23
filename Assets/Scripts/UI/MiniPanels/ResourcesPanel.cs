@@ -1,18 +1,19 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 
 namespace CityBuilderTest
 {
-    public class ResourcesPanel : MiniPanel, IInitializer<ResourceManager>
+    /// <summary>
+    /// The resources panel class.
+    /// </summary>
+    public class ResourcesPanel : MiniPanel, IInitializer<IResourceManager>
     {
         public Text goldAmountText, woodAmountText, steelAmountText;
-        ResourceManager resourceManager;
+        private IResourceManager resourceManager;
 
-        public void Initialize(ResourceManager param)
+        public void Initialize(IResourceManager resourceManager)
         {
-            resourceManager = param;
-            resourceManager.OnResourceUpdate += OnResourceUpdate;
+            this.resourceManager = resourceManager;
+            this.resourceManager.OnResourceUpdate += OnResourceUpdate;
         }
 
         private void OnResourceUpdate(object sender, ResourceUpdateEventArgs e)

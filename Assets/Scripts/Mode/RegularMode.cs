@@ -1,20 +1,22 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CityBuilderTest
 {
+    /// <summary>
+    /// The Regular Mode class.
+    /// Has methods for selecting and deselecting a building. when regular mode is active.
+    /// </summary>
     public class RegularMode : Mode
     {
-        Building selectedBuilding;
+        private Building selectedBuilding;
 
         public override void OnExit()
         {
             DeselectBuilding();
         }
 
-        void DeselectBuilding()
+        private void DeselectBuilding()
         {
             if (selectedBuilding == null)
             {
@@ -26,37 +28,42 @@ namespace CityBuilderTest
             selectedBuilding = null;
         }
 
+        /// <summary>
+        /// Selects the building if the user clicks on it.
+        /// Deselects any previously selected buildings.
+        /// </summary>
         public override void OnUpdate()
         {
+            if (!controller.HasFired())
+            {
+                return;
+            }
+
             if (eventSystem.IsPointerOverGameObject())
             {
                 return;
             }
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(controller.Position());
 
-            if (!Physics.Raycast(ray, out hit, Mathf.Infinity, buildingMask.value))
+            if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, buildingMask.value))
             {
                 return;
             }
 
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            Building building = hit.collider.gameObject.GetComponent<Building>();
+            if (selectedBuilding == building)
             {
-                Building building = hit.collider.gameObject.GetComponent<Building>();
-                if (selectedBuilding == building)
-                {
-                    return;
-                }
-
-                DeselectBuilding();
-                selectedBuilding = building;
-                selectedBuilding.OnSelect(this);
-                selectedBuilding.OnConstructionComplete += OnConstructionComplete;
+                return;
             }
+
+            DeselectBuilding();
+            selectedBuilding = building;
+            selectedBuilding.OnSelect(this);
+            selectedBuilding.OnConstructionComplete += OnConstructionComplete;
         }
 
-        void OnConstructionComplete(object sender, EventArgs e)
+        private void OnConstructionComplete(object sender, EventArgs e)
         {
             selectedBuilding.OnSelect(this);
         }

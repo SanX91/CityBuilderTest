@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace CityBuilderTest
 {
-    public abstract class Mode : MonoBehaviour, IUpdateable
+    /// <summary>
+    /// The base Mode class.
+    /// </summary>
+    public abstract class Mode : MonoBehaviour, IUpdateable, IInitializer<IController>
     {
         public LayerMask buildingMask;
         public EventSystem eventSystem;
@@ -13,6 +14,11 @@ namespace CityBuilderTest
 
         public abstract void OnUpdate();
         public abstract void OnExit();
+
+        public void Initialize(IController controller)
+        {
+            this.controller = controller;
+        }
     }
 }
 

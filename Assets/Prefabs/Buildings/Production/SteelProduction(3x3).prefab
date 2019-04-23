@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89194d83e4e48e458756d5c8034cc28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider: {fileID: 750651773}
+  col: {fileID: 750651773}
   buildingUI: {fileID: 8676521443538297759}
 --- !u!65 &750651773
 BoxCollider:
@@ -362,8 +362,7 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 881624775616202399, guid: ce671e13a42944b43a713c18bd3a67db, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce671e13a42944b43a713c18bd3a67db, type: 3}
 --- !u!1 &5982679890583781430 stripped
 GameObject:
